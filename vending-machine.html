@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vending Machine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f3f3f3;
+        }
+        .product {
+            border: 2px solid #444;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px auto;
+            width: 250px;
+            
+        }
+        button{
+            background: lightcoral;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+           
+        }
+        .add:hover {
+            background: #28a745;
+        }
+        div
+        {
+            display: inline-block;
+        }
+        #div1,#div2,#div3,#div4,#div5
+        {
+            background-color: aliceblue;
+        
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Vending Machine</h1>
+
+    <div id="para1" class="product"></div>
+    <div id="para2" class="product"></div>
+    <div id="para3" class="product"></div>
+    <div id="para4" class="product"></div>
+    
+    <pre id="div1"></pre>
+    <pre id="div2"></pre>
+    <pre id="div3"></pre>
+    <pre id="div4"></pre>
+    <pre id="div5"></pre>
+    <pre id="div6"></pre>
+    <pre id="div7"></pre>
+    <pre id="div8"></pre>
+
+
+    <div><p id="para"></p></div>
+    <script>
+        var para1 = document.getElementById("para1");
+        var para2 = document.getElementById("para2");
+        var para3 = document.getElementById("para3");
+        var para4 = document.getElementById("para4");
+        var para = document.getElementById("para");
+        var div1= document.getElementById("div1");
+        var div2 = document.getElementById("div2");
+        var div3 = document.getElementById("div3");
+        var div4 = document.getElementById("div4");
+        var div5 = document.getElementById("div5");
+        var div6 = document.getElementById("div6");
+        var div7 = document.getElementById("div7");
+        var div8 = document.getElementById("div8");
+
+
+        var sname="";
+        let num1 = 10, num2 = 8, num3 = 15, num4 = 12;
+        var a=0,b=0,c=0,d=0;
+
+
+        function display() 
+        {
+
+            para1.innerHTML = "<h3>Chips</h3>Stock: " + num1 + "<br>Price: ₹25<br><input type='number' id='qty1' min='1' placeholder='Qty'><br><br><button class='add' onclick='add(\"chips\",25,num1,\"qty1\",1)'>ADD</button>";
+            para2.innerHTML = "<h3>Chocolate</h3>Stock: " + num2 + "<br>Price: ₹20<br><input type='number' id='qty2' min='1' placeholder='Qty'><br><br><button class='add' onclick='add(\"chocolate\",20,num2,\"qty2\",2)'>ADD</button>";
+            para3.innerHTML = "<h3>Juice</h3>Stock: " + num3 + "<br>Price: ₹30<br><input type='number' id='qty3' min='1' placeholder='Qty'><br><br><button class='add' onclick='add(\"juice\",30,num3,\"qty3\",3)'>ADD</button>";
+            para4.innerHTML = "<h3>Cookies</h3>Stock:8 " + num4 + "<br>Price: ₹15<br><input type='number' id='qty4' min='1' placeholder='Qty'><br><br><button class='add' onclick='add(\"cookies\",15,num4,\"qty4\",4)'>ADD</button>";
+            para.innerHTML = `<button onclick="checkout()">CASH</button><br><br><button onclick="exit()">EXIT</button><br>`;
+        
+        }
+
+        function add(sname,price, stock, qty, product) 
+        {
+
+            let count = parseInt(document.getElementById(qty).value);
+        
+            if (isNaN(count) || count <= 0) 
+            {
+                alert("⚠️ Invalid count ");
+                return;
+            }
+
+            if (count > stock) 
+            {
+                alert("❌ Insufficient quantity ");
+                return;
+            }
+
+            var total=0;
+            var sum = 0;
+            if(sname==="chips")
+            { 
+               total = count * price;
+               div1.innerHTML="Chips - "+ count + " X ₹25 <br> Total = ₹"+ total;
+               a=Number(total);
+            }
+            
+            if(sname==="chocolate")
+            {
+                total = count * price;
+                div2.innerHTML="Chocolate - "+ count + " X ₹20 <br> Total = ₹"+ total;
+                b=Number(total);
+            }
+
+            if(sname==="juice")
+            {
+               total = count * price;
+               div3.innerHTML="Juice - "+ count + " X ₹30 <br> Total = ₹"+ total;
+               c=Number(total);
+            }
+
+            if(sname==="cookies")
+            {
+               total = count * price;
+               div4.innerHTML="Cookies -  "+ count + " X ₹15 <br> Total = ₹"+ total;
+               d=Number(total);
+            } 
+            
+            
+            if (product === 1) num1 -= count;
+            if (product === 2) num2 -= count;
+            if (product === 3) num3 -= count;
+            if (product === 4) num4 -= count;
+
+            display();
+
+        }
+
+
+
+        function checkout() 
+        {
+          var x = String(prompt("Gpay or cash").toLowerCase());
+
+
+          if( x ==="gpay" || x ==="cash")
+          {
+               sum = Number(a) + Number(b) + Number(c) + Number(d);
+
+               if (sum === 0) 
+               {
+                    alert("❌ You haven't selected any products!");
+                    return;
+
+                }
+
+               var y = prompt(" do you have discount code , enter your code : ")
+               if(y === "1234") 
+               {
+                    div5.innerHTML="<h4>Total : " + sum + "</h4>";
+                    sum = sum * 0.9; // 10% discount
+                    alert("Discount applied! New total: " + sum);
+                    div6.innerHTML="Discount applied!<br><h3> New total: " + sum + "</h3>";
+                    alert("🪙 Payment successful! Thank you for your purchase.");
+                    div7.innerHTML="Payment successful! Thank you for your purchase."
+
+               }
+               else 
+               {     
+                    alert("Incorrect discount code.")
+                    alert("Your total amount : " + sum);
+                    div6.innerHTML="<h3>Your total amount : " + sum + "</h3>";
+                    alert("🪙 Payment successful! Thank you for your purchase.");
+                    div7.innerHTML="🪙 Payment successful! Thank you for your purchase.";
+               }
+                
+          }
+          else
+          {
+                alert("⚠️ Please choose a valid payment method: Gpay or Cash.");
+                div6.innerHTML="⚠️ Please choose a valid payment method: Gpay or Cash.";
+                div7.innerHTML="";
+
+          }
+
+
+
+            
+
+
+        }
+        
+        function exit() 
+        {
+            div1.innerHTML = "";
+            div2.innerHTML = "";
+            div3.innerHTML = "";
+            div4.innerHTML = "";
+            div5.innerHTML = "";
+            div6.innerHTML = "";
+            div7.innerHTML = "";
+            div8.innerHTML = "";
+            alert("👋 Exiting the vending machine. Have a nice day!");
+            window.location.reload();
+        }
+        display();
+    </script>
+
+</body>
+</html>

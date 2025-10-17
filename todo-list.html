@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do List App</title>
+<style>
+    body
+{
+    text-align: center;
+    height: 700px;
+    width:900px;
+    margin-top:0%;
+    margin-left:20%;
+    background-image:url(./calci-bg-img\ copy.jpg) ;
+    background-repeat:no-repeat;
+    background-size: calc(120% - 50px) calc(120vh - 100px);
+}
+
+button
+{
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-size:medium;
+    background-color: lightblue;
+    
+}
+
+button:hover
+{
+    background-color: blue;
+    transition: 0.3s;
+}
+
+input
+{
+    width: 250px; 
+    height: 40px;
+    padding-left:5%;
+}
+
+#taskList li
+{
+            background-color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+button.doneBtn 
+{
+            background-color: #2196F3;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+}
+
+button.deleteBtn 
+{
+            background-color: #f44336;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: gray;
+}
+
+</style>
+
+</head>
+<body>
+<h1> My To-Do List</h1>
+
+<input type="text" id="taskInput" placeholder="🔍  Enter a new task">
+<button id="addBtn" onclick="addTask()">Add Task</button>
+<button id="view area" onclick="viewTasks()">View area</button>
+<ul id="taskList"></ul>
+
+<script> 
+var input = document.getElementById("taskInput");
+var inp = [] ;
+
+
+
+ function addTask() 
+ {
+            let taskName = document.getElementById("taskInput").value.trim();
+            if(taskName === "") 
+            {
+                alert("Please enter a task!");
+                return;
+            }
+            else
+            {
+                alert("task added successfully! 👍");
+            }
+
+            // Create a task object
+            let task = {
+                id: Math.floor(Math.random() * 1000),
+                name: taskName,
+                completed: false,
+                createdAt: new Date().toLocaleString()
+            };
+
+            inp.push(task); // Add to array
+            document.getElementById("taskInput").value = ""; // Clear input
+
+        }
+
+
+
+        // Show updated list
+        
+        
+        
+        function viewTasks() 
+        {
+            let ul = document.getElementById("taskList");
+            ul.innerHTML = ""; // Clear existing list
+
+            if(inp.length === 0) 
+            {
+                ul.innerHTML = "No tasks found!";
+                return;
+            }
+
+            for(let task of inp) {
+                let li = document.createElement("li");
+                li.textContent = task.name + " (Added: " + task.createdAt + ") ";
+                if(task.completed) li.classList.add("completed");
+
+                // Done button
+                let doneBtn = document.createElement("button");
+                doneBtn.textContent = "✔️ Done";
+                doneBtn.style.backgroundColor = "green";   // ✅ change button color
+                doneBtn.style.color = "white"; 
+                doneBtn.onclick = function() { markCompleted(task.id); }
+
+                // Delete button
+                let delBtn = document.createElement("button");
+                delBtn.textContent = "🗑️ Delete";
+                delBtn.style.backgroundColor = "red";      // ✅ change button color
+                delBtn.style.color = "white";
+                delBtn.onclick = function() { deleteTask(task.id); }
+
+                li.appendChild(doneBtn);
+                li.appendChild(delBtn);
+                ul.appendChild(li);
+            }
+
+        }
+        
+            // Function to delete a task
+
+        function deleteTask(id) 
+        {
+            let index = inp.findIndex(task => task.id === id);
+            
+            if(index !== -1) 
+            {
+                inp.splice(index, 1); // Remove from array
+                viewTasks(); // Update list
+            } 
+            
+            else 
+            {
+                alert("Task not found!");
+            }
+
+        }
+
+
+          // Function to mark a task as completed
+
+          
+        function markCompleted(id) 
+        {
+            let task = inp.find(task => task.id === id);
+            if (task) 
+            {
+                task.completed = !task.completed; // toggle instead of only true
+                viewTasks();
+            }
+        }
+
+        </script>
+</body>
+</html>

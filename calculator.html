@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        button
+        {
+            color:#FFA500;
+            cursor: pointer;
+            font-size: larger;
+            border-radius: 500%;
+            width: 50px;
+            height: 50px;
+        }
+        button:hover
+        {
+            background-color:#0033CC;
+        }
+        
+        h1
+        {
+            color:rgb(243, 30, 48);
+            display:block;
+        }
+
+        body
+        {   
+            background-image:url(./calci-img-bg.jpg);
+            text-align: center;
+            padding-top: 10%;
+        }
+        #border
+        {
+            border-width: 3px;
+            border-color: black;
+            border-style: solid;
+            display: inline-block;
+            height:17%;
+            width: 16%;
+        
+        }
+        
+        .ip
+        {
+            margin:2%;
+           /*padding:1px; */
+            width: 90%;
+            height: 40px;
+            text-align: right;
+            font-size: 20px;
+            border-radius: 5px;
+        }
+
+    </style>
+
+</head>
+
+<h1>CALCULATOR</h1>
+<body>
+    <div id="border">
+         
+             <input type="text" placeholder="00000" class="ip">
+              <br>
+        <div class="button">
+
+        
+
+            <button>AC</button>
+            <button>DEL</button>
+            <button class="oper" > % </button>
+            <button class="oper"> / </button>
+             <br>
+            <button class="button">7</button>
+            <button class="button">8</button>
+            <button class="button">9 </button>
+            <button >*</button>
+            <br>
+        
+            <button class="button">4</button>
+            <button class="button">5</button>
+            <button class="button"> 6 </button>
+            <button class="oper"> -</button>
+        
+             <br>
+            <button class="button">1</button>
+            <button class="button">2</button>
+            <button class="button"> 3 </button>
+            <button class="oper"> +</button>
+             <br>
+        
+        <button>(</button>
+        <button class="button">0</button>
+        <button>)</button>
+        <button onclick="calculate()"> =</button>
+        <br>
+        </div>
+    </div>
+    
+
+
+
+<script>
+    let input = document.querySelector(".ip");
+    let buttons = document.querySelectorAll("button");
+    let expression = "";
+    function calculate() 
+    {
+        try 
+        {
+            input.value = eval(input.value.replace(/x/g, "*"));
+            expression = input.value;
+        } 
+        catch 
+        {
+            input.value = "Error";
+            expression = "";
+        }
+    }
+
+
+    buttons.forEach(btn =>  
+    {
+        btn.addEventListener("click", () => 
+        {
+            let value = btn.textContent;
+
+            if (value === "AC") 
+            {
+                expression = "";
+                input.value = "";
+            } 
+            else if (value === "DEL") 
+            {
+                expression = expression.slice(0, -1);
+                input.value = expression;
+            } 
+            else if (value === "=") 
+            {
+                calculate();
+            } 
+                
+            else 
+            {
+                expression += value;
+                input.value = expression;
+            }
+
+        });
+        
+    });
+
+
+</script>
+
+
+
+
+
+</body>
+</html>
