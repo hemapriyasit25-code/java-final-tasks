@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age & Temprature Calculator</title>
+    <style>
+        body
+        {
+            font-size : 20px; 
+            color : deeppink; 
+            font-weight : bold; 
+            font-family : Arial;
+            text-align : center;
+            margin-top : 2px;
+            background-color : beige;
+        }
+        h1
+        {
+            color : black;
+        }
+         
+        input
+        {
+            height : 50px;
+            width : 150px;
+            font-size : 16px;
+        }
+
+        button
+        {
+            font-size : large;
+        }
+
+        button
+        {
+            height : 50px;
+            width : 200px;
+            border-radius : 5px;
+            background-color : royalblue;
+            color : white;
+            font-family : Arial;
+        }
+
+        #cal:hover
+        {
+            background-color : blue;
+            cursor : pointer;
+            transition : 1s;        
+        }
+
+        div
+        {
+            border-width : 2px;
+            border-style : solid;
+            border-color : #444;
+            border-radius: 10px;
+            padding: 25px;
+            margin : 10px auto ;
+            width  : 550px;
+            height :500px;
+        /*  box-shadow: 0px 0px 10px gray;   */
+            background-color:azure
+
+        }
+
+        #clear
+        {
+            background-color : crimson;
+        }
+
+        #clear:hover
+        {
+          background-color :red;
+          cursor : pointer;
+          transition : 1s;
+        }
+
+        #today
+        {
+            background-color :black;
+            padding : 5px;
+            height : 50px;
+            width : 100px;
+        }
+
+        #options1,#options2
+        {
+            height : 60px;
+            width : 150px;
+            font-size : 20px;
+            cursor : pointer;
+        }
+        
+    </style>
+</head>
+<body>
+    <hr>
+    <h1>Age Calculator</h1>
+    <div>
+        <br>
+        <label>  Date of Birth : <br><br><input type = "date" value = "2008-07-04" id = "fromdate"></label>
+        <br><br><br>
+        <label> Age at the Date of : <br><br><input type = "date" id = "todate"></label>
+        <br> (or) <br>
+        <button id = "today" onclick = "today()"> Today Date</button>
+        <br><br><br>
+        <button id = "cal" onclick = "calculate()"> Calculate </button>
+        <button onclick = "clearall()" id = "clear"> Clear All </button>
+        <p id = "para"></p>
+    </div>
+    <br><hr><br><br>
+
+    <!-- Temperature Coverter-->
+
+    <h1>Temperature Coverter</h1>
+    <div>
+        <br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+        <select id = "options1">
+            <option> Select </option>
+            <option class = "opt"> Fahrenheit </option>
+            <option class = "opt"> Kelvin </option>
+            <option class = "opt"> Celsius </option>
+        </select>
+        <br><br>
+        Enter value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 
+        <input type = "number" id = "inputtemp">
+        <br><br> 
+        Converting type&nbsp;: 
+        <select id = "options2">
+            <option> Select </option>
+            <option class = "opt" > Fahrenheit </option>
+            <option class = "opt" > Kelvin </option>
+            <option class = "opt" > Celsius </option>
+        </select>
+        <br><br><br><br>
+        <button onclick = "resulttemp()" id = "cal"> Result </button>
+        <button onclick = "clearall()" id = "clear"> Clear All </button>
+        <br><br>
+        <p id = "result"></p>
+    </div>
+    <br><br><hr>
+<script>
+
+// START !
+
+    // we get today date : 
+
+        function today()
+        {
+            const today = new Date().toISOString().split('T')[0];          
+            document.getElementById("todate").value = today;
+        }
+
+    // Age calculating.... 
+
+        function calculate() 
+        {
+            const dob = new Date(document.getElementById("fromdate").value);
+            const todate = new Date(document.getElementById("todate").value);
+        
+
+            if (!dob || !todate) 
+            {
+                alert(" Please select both dates. ");
+                document.getElementById("para").innerText = " Please select both dates. ";
+                return;
+            }
+
+            let year = todate.getFullYear() - dob.getFullYear();
+            let month = todate.getMonth() - dob.getMonth();
+            let day = todate.getDate() - dob.getDate();
+
+            if(year<0)
+            {
+                alert("year cannot be negative");
+                document.getElementById("para").innerHTML = " Please enter a valid date !" ;
+            }
+            else
+            {
+            if (day < 0) 
+            {
+                month--;
+                day += new Date(todate.getFullYear(), todate.getMonth(), 0).getDate();
+            }
+
+            if (month < 0) 
+            {
+                year--;
+                month += 12;
+            }
+        
+
+            document.getElementById("para").innerHTML = "Age: " + year + " years, "  + month + " months, " + day +" days";
+        }
+    }
+
+    // Reload the page....
+
+        function clearall()
+        {
+
+            alert("Clear the page");
+            window.location.reload();
+        
+        }
+
+    // Temperature converting....
+
+        function resulttemp()
+        {
+
+            var input = parseFloat(document.getElementById("inputtemp").value);
+            var option1 = document.getElementById("options1").value;
+            var option2 = document.getElementById("options2").value;
+            var res;
+            
+            if (isNaN(input)) 
+            {
+                alert(" Enter valid temprature ");
+                return;
+            }
+    
+            else
+            {
+                // Fahrenheit  ==>
+            
+                    if(option1 == "Fahrenheit" && option2 == "Fahrenheit") res = input;
+                    else if(option1 == "Fahrenheit" && option2 == "Kelvin") res = (input - 32)*5/9 + 273.15;
+                    else if(option1 == "Fahrenheit" && option2 == "Celsius") res = (input -32) * 5/9 ;
+            
+                // Kelvin ==>
+            
+                    else if(option1 == "Kelvin" && option2 == "Fahrenheit")  res = (input - 273.15) * 9/5 + 32;
+                    else if(option1 == "Kelvin" && option2 == "Celsius") res = input - 273.15;    
+                    else if(option1 == "Kelvin" && option2 == "Kelvin") res = input;
+            
+                // Celsius ==>
+            
+                    else if(option1 == "Celsius" && option2 == "Fahrenheit") res = (input *9/5) + 32 ;
+                    else if(option1 == "Celsius" && option2 == "Kelvin") res = input + 273.15 ;
+                    else if(option1 == "Celsius" && option2 == "Celsius") res = input;
+                    else alert(" Enter valid options ");
+            
+                // Display ==>
+            
+                    var to = document.getElementById("result");
+                    to.innerHTML = input + " " + option1 + " = " + res.toFixed(2) + " " + option2;
+            }
+        }
+
+// END !
+
+</script>
+</body>
+</html>
