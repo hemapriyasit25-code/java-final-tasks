@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Ticket booking page</title>
+    <style>
+        body
+        {
+            text-align: center;
+            /* margin-top: 50px; */
+        }
+
+        button
+        {
+            height:45px;
+            width:45px;
+            background-color: lightgray;
+            border: none;
+            border-radius: 5px;;
+        }
+
+        #display
+        {
+            height: 100px;
+            width: 380px;
+            background-color: black;
+            color: bisque;
+        }
+
+        .booked
+        {
+            background-color: green;
+        }
+
+        .confirmed
+        {
+            background-color: red;
+        }
+
+        .book
+        {
+            background-color: aqua;
+            height:50px;
+            width:200px;
+        }
+
+        .total
+        {
+            background-color:blueviolet;
+            height:50px;
+            width:100px;
+        }
+
+        #emp
+        {
+            background-color: lightgray;
+            width: 60px;
+        }
+
+        #sec
+        {
+            background-color: lightgreen;
+            width: 60px;
+        }
+
+        #bked
+        {
+            background-color: red;
+            width: 60px;
+        }
+        
+        #clearall
+        {
+            background-color: blue;
+            width:100px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color: deeppink;">Movie Ticket Booking</h1>
+    <select>
+        <option> Select Movies :</option>
+        <option>Ratsasan</option>
+        <option>Soorarai Pottru</option>
+        <option>sita raman</option>
+        <option>12th fail</option>
+        <option>RRR</option>
+    </select> 
+
+    <button style="background-color: aqua;width:100px;">price : ₹120</button><br><br>
+    <button id="emp">empty seat </button>
+    <button id="sec">select seat </button>
+    <button id="bked">booked seat </button><br><br>
+    <center><button id="display"><h1>SCREEN</h1></button><br><br></center>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button><br>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button><br>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button> <br>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button> <br>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button>
+    <button onclick = "clicked(this)" ></button> <br> <br>
+    <div id="div1"></div>
+    <div id="div2"></div> <br> <br> <br>
+    <button onclick = "clearall()" id = "clearall">Clear All</button>
+    <button class = "book" onclick = "booking(this)">Confirm Booking</button>
+
+    <script>
+
+        var div1 = document.getElementById("div1");
+        var div2 = document.getElementById("div2");
+
+
+        function clicked(btn) 
+        {
+            // Only toggle if it's not already confirmed
+
+            if (!btn.classList.contains('confirmed')) 
+            {
+                btn.classList.toggle('booked');
+            }
+        }
+
+        // When "Confirm Booking" is pressed
+
+        function booking() 
+        {
+            const seats = document.querySelectorAll('.booked');
+            if (seats.length === 0) {
+                alert("Please select at least one seat before confirming!");
+                return;
+            }
+
+            seats.forEach
+            (
+                seat => 
+                    {
+                        seat.classList.remove('booked');
+                        seat.classList.add('confirmed');
+                    }
+            );
+          
+            const seatCount = seats.length;
+            const seatPrice = 120; // 💰 per seat price
+            const totalPrice = seatCount * seatPrice;
+
+            // Show totals dynamically
+
+            div1.innerHTML = `
+                <button class="total">Total Seats: ${seatCount}</button><br><br>
+                <button class="total">Total Price: ₹${totalPrice}</button>
+            `;
+
+           alert(seats.length + " seat(s) successfully booked!");
+        }
+
+        function clearall() 
+        {
+            const bookedSeats = document.querySelectorAll('.booked');
+            bookedSeats.forEach(seat => {
+            seat.classList.remove('booked');
+            });
+        }
+
+    </script>
+</body>
+</html>
